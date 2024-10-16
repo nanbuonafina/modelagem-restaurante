@@ -86,4 +86,4 @@ O diagrama ER reflete essas tabelas e seus relacionamentos e pode ser visualizad
 
 ## Autor
 
-Desenvolvido por Fernanda Buonafina, Livia Janine, Fernanda Gabrielli, Mariana Temporal, Clara.
+Desenvolvido por Fernanda Buonafina, Livia Janine, Fernanda Gabrielli, Mariana Temporal, Clara Heloísa.
