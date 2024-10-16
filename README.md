@@ -1,4 +1,4 @@
-# Documentação do Banco de Dados - Sistema de Pedidos e Reservas
+# Documentação do Banco de Dados - Restaurante
 
 ## Descrição Geral
 Este banco de dados foi projetado para gerenciar um sistema de pedidos e reservas de clientes. Ele inclui informações sobre clientes, pedidos, itens de pedidos, cardápio, reservas e pagamentos.
