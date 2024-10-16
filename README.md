@@ -87,7 +87,3 @@ O diagrama ER reflete essas tabelas e seus relacionamentos e pode ser visualizad
 ## Autor
 
 Desenvolvido por Fernanda Buonafina, Livia, Fernanda Gabrielli, Mariana Temporal, Clara.
-
----
-
-Documentação gerada para descrever o modelo lógico de banco de dados do sistema de pedidos e reservas.
