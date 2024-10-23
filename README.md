@@ -108,7 +108,7 @@ Tabela que armazena os diferentes status de um pagamento.
 
 ## Considerações Finais
 
-Este modelo foi construído para garantir a integridade e consistência das informações de clientes, reservas e pedidos no restaurante. Os relacionamentos entre as tabelas são cruciais para garantir que os dados estejam corretamente associados, permitindo o controle de status em diversas etapas do processo.
+Este modelo foi construído para garantir a integridade e consistência das informações de clientes, reservas e pedidos no restaurante. Os relacionamentos entre as tabelas são essenciais para garantir que os dados estejam corretamente associados, permitindo o controle de status em diversas etapas do processo.
 
 ## Diagrama ER
 
