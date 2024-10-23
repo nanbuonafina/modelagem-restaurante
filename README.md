@@ -1,89 +1,117 @@
-# Documentação do Banco de Dados - Restaurante
+# Documentação do Banco de Dados - Sistema de Reservas e Pedidos
 
-## Descrição Geral
-Este banco de dados foi projetado para gerenciar um sistema de pedidos e reservas de clientes. Ele inclui informações sobre clientes, pedidos, itens de pedidos, cardápio, reservas e pagamentos.
+Este banco de dados foi modelado para gerenciar um sistema de reservas e pedidos em um restaurante. A estrutura inclui tabelas relacionadas a clientes, reservas, pedidos, mesas, itens do cardápio, formas de pagamento e status de diferentes processos.
 
-## Tabelas
+## Tabelas e Relacionamentos
 
-### 1. **cadastro_cliente**
-Armazena as informações dos clientes cadastrados no sistema.
+### 1. **Tabela: `tb_cliente`**
+Tabela que armazena as informações dos clientes.
 
-| Coluna          | Tipo             | Descrição                       |
-|-----------------|------------------|---------------------------------|
-| `id_cliente`    | INT              | Identificador único do cliente. |
-| `nome_completo` | VARCHAR(100)      | Nome completo do cliente.       |
-| `telefone`      | VARCHAR(15)       | Telefone de contato do cliente. |
-| `email`         | VARCHAR(100)      | Endereço de email do cliente.   |
+- **Colunas:**
+  - `id_cliente` (INT, PRIMARY KEY): Identificador único do cliente.
+  - `nome_completo` (VARCHAR(100)): Nome completo do cliente.
+  - `numero_telefone` (VARCHAR(11)): Número de telefone do cliente.
+  - `email` (VARCHAR(100)): E-mail do cliente.
 
-### 2. **reserva**
-Armazena os detalhes das reservas feitas pelos clientes.
+### 2. **Tabela: `tb_reserva`**
+Tabela que armazena as reservas realizadas pelos clientes.
 
-| Coluna           | Tipo             | Descrição                         |
-|------------------|------------------|-----------------------------------|
-| `id_reserva`     | INT              | Identificador único da reserva.   |
-| `data_reserva`   | DATE             | Data da reserva.                  |
-| `hora_reserva`   | TIME             | Hora da reserva.                  |
-| `qtd_pessoa`     | INT              | Quantidade de pessoas na reserva. |
-| `status_reserva` | ENUM('pendente', 'confirmada', 'cancelada') | Status da reserva.               |
-| `id_cliente`     | INT              | Identificador do cliente que fez a reserva (chave estrangeira). |
+- **Colunas:**
+  - `id_reserva` (INT, PRIMARY KEY): Identificador único da reserva.
+  - `data_reserva` (DATE): Data da reserva.
+  - `hora_reserva` (TIME): Hora da reserva.
+  - `qtd_pessoa` (INT): Quantidade de pessoas na reserva.
+  - `id_status_reserva` (INT, FOREIGN KEY): Chave estrangeira para a tabela `tb_status_reserva`, indicando o status da reserva.
+  - `id_cliente` (INT, FOREIGN KEY): Chave estrangeira para a tabela `tb_cliente`, indicando o cliente que fez a reserva.
+  - `id_mesa` (INT, FOREIGN KEY): Chave estrangeira para a tabela `tb_mesa`, indicando a mesa reservada.
 
-### 3. **pedido**
-Armazena os dados dos pedidos realizados pelos clientes.
+### 3. **Tabela: `tb_status_reserva`**
+Tabela que armazena os diferentes status de uma reserva.
 
-| Coluna           | Tipo             | Descrição                         |
-|------------------|------------------|-----------------------------------|
-| `id_pedido`      | INT              | Identificador único do pedido.    |
-| `data_pedido`    | DATE             | Data em que o pedido foi feito.   |
-| `hora_pedido`    | TIME             | Hora em que o pedido foi feito.   |
-| `status_pedido`  | ENUM('em preparação', 'pronto', 'entregue') | Status do pedido.              |
-| `id_cliente`     | INT              | Identificador do cliente que fez o pedido (chave estrangeira). |
+- **Colunas:**
+  - `id_status_reserva` (INT, PRIMARY KEY): Identificador único do status da reserva.
+  - `descricao_status_reserva` (VARCHAR(15)): Descrição do status (e.g., "Pendente", "Confirmada", "Cancelada").
 
-### 4. **item_pedido**
-Armazena os itens individuais que compõem um pedido.
+### 4. **Tabela: `tb_pedido`**
+Tabela que armazena os pedidos realizados pelos clientes.
 
-| Coluna            | Tipo              | Descrição                           |
-|-------------------|-------------------|-------------------------------------|
-| `id_item_pedido`  | INT               | Identificador único do item do pedido. |
-| `quantidade`      | INT               | Quantidade do item no pedido.       |
-| `preco_unitario`  | DECIMAL(10,2)     | Preço unitário do item.             |
-| `id_pedido`       | INT               | Identificador do pedido (chave estrangeira). |
-| `id_prato`        | INT               | Identificador do prato (chave estrangeira). |
+- **Colunas:**
+  - `id_pedido` (INT, PRIMARY KEY): Identificador único do pedido.
+  - `data_pedido` (DATE): Data do pedido.
+  - `hora_pedido` (TIME): Hora do pedido.
+  - `id_status_pedido` (INT, FOREIGN KEY): Chave estrangeira para a tabela `tb_status_pedido`, indicando o status do pedido.
 
-### 5. **cardapio**
-Armazena os itens do cardápio disponíveis para pedidos.
+### 5. **Tabela: `tb_status_pedido`**
+Tabela que armazena os diferentes status de um pedido.
 
-| Coluna            | Tipo              | Descrição                           |
-|-------------------|-------------------|-------------------------------------|
-| `id_prato`        | INT               | Identificador único do prato.       |
-| `nome_prato`      | VARCHAR(45)       | Nome do prato.                      |
-| `descricao_prato` | TINYTEXT          | Descrição do prato.                 |
-| `preco_prato`     | DECIMAL(10,2)     | Preço do prato.                     |
-| `categoria_prato` | ENUM('entrada', 'prato principal', 'sobremesa') | Categoria do prato. |
+- **Colunas:**
+  - `id_status_pedido` (INT, PRIMARY KEY): Identificador único do status do pedido.
+  - `descricao_status_pedido` (VARCHAR(15)): Descrição do status do pedido (e.g., "Em preparo", "Entregue").
 
-### 6. **pagamento**
-Armazena os dados dos pagamentos realizados para os pedidos.
+### 6. **Tabela: `tb_mesa`**
+Tabela que armazena as informações das mesas no restaurante.
 
-| Coluna              | Tipo              | Descrição                           |
-|---------------------|-------------------|-------------------------------------|
-| `id_pagamento`      | INT               | Identificador único do pagamento.   |
-| `valor_total`       | DECIMAL(10,2)     | Valor total do pagamento.           |
-| `forma_pagamento`   | ENUM('dinheiro', 'cartão', 'pix') | Forma de pagamento.     |
-| `status_pagamento`  | ENUM('pendente', 'pago') | Status do pagamento.      |
-| `id_pedido`         | INT               | Identificador do pedido associado (chave estrangeira). |
+- **Colunas:**
+  - `id_mesa` (INT, PRIMARY KEY): Identificador único da mesa.
+  - `valor_total` (DECIMAL(10,2)): Valor total de pedidos realizados na mesa.
+  - `id_forma_pagamento` (INT, FOREIGN KEY): Chave estrangeira para a tabela `tb_forma_pagamento`, indicando a forma de pagamento utilizada.
+  - `id_status_pagamento` (INT, FOREIGN KEY): Chave estrangeira para a tabela `tb_status_pagamento`, indicando o status do pagamento.
+  - `id_pedido` (INT, FOREIGN KEY): Chave estrangeira para a tabela `tb_pedido`, associando o pedido à mesa.
+
+### 7. **Tabela: `tb_item_pedido`**
+Tabela que armazena os itens de um pedido específico.
+
+- **Colunas:**
+  - `id_item_pedido` (INT, PRIMARY KEY): Identificador único do item no pedido.
+  - `quantidade` (INT): Quantidade de unidades do item no pedido.
+  - `preco_unitario` (DECIMAL(10,2)): Preço unitário do item.
+  - `id_pedido` (INT, FOREIGN KEY): Chave estrangeira para a tabela `tb_pedido`, associando o item ao pedido.
+  - `id_item` (INT, FOREIGN KEY): Chave estrangeira para a tabela `tb_cardapio`, indicando o item do cardápio.
+
+### 8. **Tabela: `tb_cardapio`**
+Tabela que armazena os itens disponíveis no cardápio.
+
+- **Colunas:**
+  - `id_item` (INT, PRIMARY KEY): Identificador único do item no cardápio.
+  - `nome_prato` (VARCHAR(45)): Nome do prato ou item do cardápio.
+  - `descricao_prato` (TINYTEXT): Descrição do prato.
+  - `preco_prato` (DECIMAL(10,2)): Preço do prato.
+  - `categoria_prato` (ENUM): Categoria do prato (e.g., "Entrada", "Prato Principal", "Sobremesa").
+
+### 9. **Tabela: `tb_forma_pagamento`**
+Tabela que armazena as diferentes formas de pagamento aceitas.
+
+- **Colunas:**
+  - `id_forma_pagamento` (INT, PRIMARY KEY): Identificador único da forma de pagamento.
+  - `descricao_forma_pagamento` (VARCHAR(15)): Descrição da forma de pagamento (e.g., "Cartão de Crédito", "Dinheiro").
+
+### 10. **Tabela: `tb_status_pagamento`**
+Tabela que armazena os diferentes status de um pagamento.
+
+- **Colunas:**
+  - `id_status_pagamento` (INT, PRIMARY KEY): Identificador único do status do pagamento.
+  - `descricao_status_pagamento` (VARCHAR(15)): Descrição do status do pagamento (e.g., "Pendente", "Pago").
 
 ## Relacionamentos
 
-- **cadastro_cliente** tem um relacionamento de 1:N com **pedido**, ou seja, um cliente pode fazer vários pedidos.
-- **cadastro_cliente** tem um relacionamento de 1:N com **reserva**, ou seja, um cliente pode fazer várias reservas.
-- **pedido** tem um relacionamento de 1:N com **item_pedido**, ou seja, um pedido pode conter vários itens de pedido.
-- **item_pedido** tem um relacionamento de N:1 com **cardapio**, ou seja, um item de pedido corresponde a um prato do cardápio.
-- **pedido** tem um relacionamento de 1:1 com **pagamento**, ou seja, cada pedido possui um único pagamento.
-- **reserva** tem um relacionamento de N:1 com **cadastro_cliente**, onde um cliente pode ter várias reservas.
+- **Cliente - Reserva**: Um cliente pode fazer várias reservas. (1:N)
+- **Reserva - Status da Reserva**: Cada reserva tem um status associado. (N:1)
+- **Reserva - Mesa**: Cada reserva pode estar associada a uma mesa específica. (N:1)
+- **Mesa - Pedido**: Uma mesa pode ter vários pedidos associados. (1:N)
+- **Pedido - Status do Pedido**: Cada pedido possui um status associado. (N:1)
+- **Pedido - Itens do Pedido**: Um pedido pode conter vários itens. (1:N)
+- **Itens do Pedido - Cardápio**: Cada item de um pedido está relacionado a um item do cardápio. (N:1)
+- **Mesa - Forma de Pagamento**: Uma mesa pode ter uma forma de pagamento associada. (N:1)
+- **Mesa - Status do Pagamento**: Cada mesa tem um status de pagamento associado. (N:1)
+
+## Considerações Finais
+
+Este modelo foi construído para garantir a integridade e consistência das informações de clientes, reservas e pedidos no restaurante. Os relacionamentos entre as tabelas são cruciais para garantir que os dados estejam corretamente associados, permitindo o controle de status em diversas etapas do processo.
 
 ## Diagrama ER
 
 O diagrama ER reflete essas tabelas e seus relacionamentos e pode ser visualizado utilizando o MySQL Workbench.
 
-## Autor
+## Autoria
 
 Desenvolvido por Fernanda Buonafina, Livia Janine, Fernanda Gabrielli, Maryana Ferreira Temporal, Clara Heloísa.
