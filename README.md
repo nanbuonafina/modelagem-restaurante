@@ -3,6 +3,7 @@
 Este banco de dados foi modelado para gerenciar um sistema de reservas e pedidos em um restaurante. A estrutura inclui tabelas relacionadas a clientes, reservas, pedidos, mesas, itens do cardápio, formas de pagamento e status de diferentes processos.
 
 Você pode visualizar o modelo conceitual clicando no link a seguir: https://app.brmodeloweb.com/#!/publicview/67170297ac9ce12e5d36e0a3
+
 Para importar o banco de dados, execute o seguinte comando no MySQL:
 ```bash
 mysql -u root -p mydb < db_restaurante.sql
