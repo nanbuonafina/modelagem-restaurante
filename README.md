@@ -17,7 +17,7 @@ Tabela que armazena as informações dos clientes.
 - **Colunas:**
   - `id_cliente` (INT, PRIMARY KEY): Identificador único do cliente.
   - `nome_completo` (VARCHAR(100)): Nome completo do cliente.
-  - `numero_telefone` (VARCHAR(11)): Número de telefone do cliente.
+  - `numero_telefone` (VARCHAR(11), UNIQUE): Número de telefone do cliente.
   - `email` (VARCHAR(100)): E-mail do cliente.
 
 ### 2. **Tabela: `tb_reserva`**
